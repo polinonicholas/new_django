@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+<!-- Unique CSS -->
+{% block head %}
+{{ block.super }}
+
+{% endblock head %}
+
+<!-- Unique Content -->
+{% block content %}
+{{ block.super }}
+<div class="">
+  <div class="">
+    <img class="" src="{{user.profile.image.url}}">
+    <div class="">
+      <h2 class="">{{user.username}}</h2>
+      <p class="">{{user.email}}</p>
+    </div>
+  </div>
+  <form method="POST" enctype = "multipart/form-data">
+  {%csrf_token%}
+    <fieldset class = "form-group">
+      <legend class = "">Update Profile</legend>
+      {{u_form}}
+      {{p_form}}
+    </fieldset>
+    <div class= "form-group">
+      <button class = "" type ="submit">Update</button>
+    </div>
+  </form>
+</div>
+{% endblock content %}
+
+<!-- Unique Scripts -->
+{% block scripts %}
+{{ block.super }}
+
+{% endblock scripts %}
+
+
+{% block breadcrumbs %}{% endblock breadcrumbs %}

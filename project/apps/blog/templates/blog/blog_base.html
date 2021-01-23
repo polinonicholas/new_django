@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+<!-- Unique CSS -->
+{% block head %}
+{{ block.super }}
+	<link rel="stylesheet" type="text/css" href="{%static 'blog/css/main.css'%}">
+{% endblock head %}
+
+<!-- Unique Content -->
+{% block content %}
+
+
+{{ block.super }}
+{% endblock content %}
+
+<!-- Unique Scripts -->
+{% block scripts %}
+{{ block.super }}
+	<script src="{%static 'blog/js/main.js'%}"></script>
+{% endblock scripts %}
+
+

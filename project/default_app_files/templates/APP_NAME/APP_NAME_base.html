@@ -1,0 +1,19 @@
+{% extends "templates/base.html" %}
+
+<!-- Unique CSS -->
+{% block head %}
+{{ block.super %}}
+<link rel="stylesheet" type="text/css" href="{%static 'APP_NAME/css/main.css'%}">
+{% endblock head}
+
+<!-- Unique Content -->
+{% block content %}
+{% endblock content%}
+
+<!-- Unique Scripts -->
+{% block scripts %}
+{{ block.super }}
+<script src="{%static 'APP_NAME/js/main.js'%}"></script>
+{% endblock scripts %}
+
+

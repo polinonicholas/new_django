@@ -1,0 +1,58 @@
+.navbar{
+  height:78px;
+  
+}
+.navbar-brand {
+    position: absolute;
+    left: 50%;
+    transform:translateX(-50%);  /* 50% of logo width */
+    display: block;
+}
+@media (max-width: 991.98px) {
+  .navbar .navbar-collapse {
+    background: rgba(0, 0, 0, 1);
+    opacity: 1;
+    position: fixed;
+    top: 78px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+  .navbar .navbar-collapse.collapse.show {
+    opacity: 1;
+    z-index: 1000;
+  }
+.navbar-toggler{
+  z-index: 1000;
+  outline-color:black;
+  color:blue;
+}
+#navigation_items
+{
+  color:white;
+}
+.navbar-toggler:focus,
+.navbar-toggler-icon:focus {
+    outline-color:gray;
+}
+.navbar-toggler:active
+{
+  outline-color:#5781E7;
+}
+
+
+
+.fa-angle-up, .fa-angle-down
+{
+color:black;
+}
+
+
+
+
+/*.navbar-light .navbar-nav .nav-link {
+    color: red;
+}*/
+

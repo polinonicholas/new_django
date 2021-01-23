@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+<!-- Unique CSS -->
+{% block head %}
+{{ block.super }}
+<link rel="stylesheet" type="text/css" href="{%static 'users/css/register.css'%}">
+{% endblock head %}
+<!-- Unique Content -->
+{% block content %}
+{{ block.super }}
+{% include "_noscript.html" with action="create an account" %}
+{% include "users/_register_form.html" %}
+{% endblock content %}
+<!-- Unique Scripts -->
+{% block scripts %}
+{{ block.super }}
+<script src="{%static 'users/js/main.js'%}"></script>
+<script src="{%static 'users/js/register.js'%}"></script>
+{% endblock scripts %}
+{% block breadcrumbs %}{% endblock breadcrumbs %}

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+<!-- Unique CSS -->
+{% block head %}
+{{ block.super }}
+	<link rel="stylesheet" type="text/css" href="{%static 'blog/css/main.css'%}">
+{% endblock head %}
+
+<!-- Unique Content -->
+{% block content %}
+{{ block.super }}
+<!-- Single button -->
+<!-- Split button -->
+<div class="btn-group">
+  <button type="button" class="btn btn-danger">Action</button>
+  <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true">
+    <span class="caret"></span>
+    <span class="sr-only">Toggle Dropdown</span>
+  </button>
+  <ul class="dropdown-menu">
+  	<li role="separator" class="divider"></li>
+    <li><a href="#">Action</a></li>
+    <li><a href="#">Another action</a></li>
+    <hr>
+    <li class="divider"></li>
+    <li><a href="#">Something else here</a></li>
+    <<div class="dropdown-divider"></div>
+    <li role="separator" class="divider"></li>
+    <li><a href="#">Separated link</a></li>
+  </ul>
+</div>
+{% endblock content %}
+
+<!-- Unique Scripts -->
+{% block scripts %}
+{{ block.super }}
+	<script src="{%static 'blog/js/main.js'%}"></script>
+{% endblock scripts %}
+{% block breadcrumbs %}{% include "_breadcrumbs.html" with ancestors=object.category.get_ancestors object=object%}{% endblock breadcrumbs %}

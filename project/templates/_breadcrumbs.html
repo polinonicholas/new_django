@@ -1,0 +1,13 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+	<li class="breadcrumb-item"><a href="/">🏠</a></li>
+
+	{% for node in ancestors %}
+	<li class="breadcrumb-item"><a href="{{node.get_absolute_url}}">{{node.name}}</a></li>
+    {% endfor %}
+    {% if object.category %}
+    <li class="breadcrumb-item"><a href="{{object.category.get_absolute_url}}">{{ object.category }}</a></li>
+    {% endif %}
+	<li class="breadcrumb-item active" aria-current="page">{{ object }}</li>
+    </ol>
+</nav>

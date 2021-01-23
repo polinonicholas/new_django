@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+<!-- Unique CSS -->
+{% block head %}
+{{ block.super }}
+
+{% endblock head %}
+
+<!-- Unique Content -->
+{% block content %}
+{{ block.super }}
+<h2>Thanks for stopping by!</h2>
+<div class="">
+	<small class =""><a href="{%url 'login'%}">Login</a></small>
+</div>
+{% endblock content %}
+
+<!-- Unique Scripts -->
+{% block scripts %}
+{{ block.super }}
+
+{% endblock scripts %}
+
+
+{% block breadcrumbs %}{% endblock breadcrumbs %}

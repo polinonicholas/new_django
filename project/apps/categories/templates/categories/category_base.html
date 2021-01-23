@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load mptt_tags %}
+
+<!-- Unique CSS -->
+{% block head %}
+{{ block.super }}
+<link rel="stylesheet" type="text/css" 
+href="{%static 'categories/css/main.css'%}">
+{% endblock head %}
+
+<!-- Unique Content -->
+{% block content %}
+<div>
+    <div>
+	<ul>
+	{% recursetree object_list %}
+	    <li>
+		<a href="{{node.get_absolute_url}}">{{node.name}}</a>
+		{% if not node.is_leaf_node %}
+                <ul class="children">
+                    {{ children }}
+                </ul>
+		{% endif %}
+	    </li>
+	{% endrecursetree %}
+	</ul>
+    </div>
+</div>
+{% endblock content%}
+
+<!-- Unique Scripts -->
+{% block scripts %}
+{{ block.super }}
+<script src="{%static 'categories/js/main.js'%}"></script>
+{% endblock scripts %}
+
+
+
+
+

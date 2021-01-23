@@ -1,0 +1,56 @@
+<div class="container d-flex justify-content-center">
+  <form id="register_form" class = "recaptcha_form" method="POST" novalidate>
+    {%csrf_token%}
+	<input type="hidden" name="g-recaptcha-response" id='recaptcha_v3'>
+	<fieldset class="form-group">
+	  <legend class="form_legend p-2">
+	    <span class = "d-flex justify-content-center">Create Your Account</span>
+	    <div class="d-flex justify-content-center">
+	      <details id = "form_details">
+	        <summary>Guidelines</summary>
+	        {% include "users/_register_form_guidelines.html" %}
+	   	  </details>
+	   	</div>
+	  </legend>
+	  <div id="non_field_error" class="form_field">
+	  	<div id="non_field_error" class="d-flex justify-content-center">
+	    {{ form.non_field_errors }}
+	    </div>
+	  </div>
+	  {% for field in form %}
+	  {% if field.field.required %}
+	  <div class="form_field required"> 
+	  {% else %}
+	  <div class="form_field">
+	  {% endif %}
+	    <div class= "d-flex justify-content-center field_div">
+	    <span style="display:none" class="validate_symbol" aria-live="polite">&#10003;</span>
+	  {{ field }}
+	  	</div>
+	  	<div class= "d-flex justify-content-center error_div">
+	  	<div style = "display:none" class="error" aria-live="polite"></div>
+	  	{% if field.name == 'password1' %}
+			<div style = "display:none" class="help"id="password_toggle">SHOW PASSWORD</div>
+		  {% endif %}
+	  	</div>
+		{{field.errors}}
+	  </div>
+		  <!-- {% if field.name == 'password1' %}
+			<div style = "display:none" class="help"id="password_toggle">SHOW PASSWORD</div>
+		  {% endif %} -->
+	  {% endfor %}
+
+	</fieldset>
+	<div class="form-group text-center">
+		<div class="g-recaptcha d-flex justify-content-center" id="recaptcha_v2" style = "display:none"> </div>
+	  <button class="btn btn-primary submit_register" type="submit" disabled>Sign Up</button>
+	  <div><small id="complete_request">Please complete form before submission.</small></div>
+	  <div class="p-2">
+	  	<small class="separate">Existing accounts: <a class= "" href="{%url 'login'%}">Sign In</a></small>
+	    <small>Forgotten credentials: <a class= "" href="{%url 'password_reset'%}">Reset Password</a></small>
+	    
+	  </div>
+	</div>
+  </form>
+</div>
+
