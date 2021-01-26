@@ -19,11 +19,11 @@ $(document)
   {
     check_recaptcha_fail();
     // prevent no script element space
-    $("#noscript")
-        .css(
-        {
-          "display": "none"
-        });
+    // $("#noscript")
+    //     .css(
+    //     {
+    //       "display": "none"
+    //     });
     // refresh page if accessed through browser history
     if(performance.navigation.type == 2)
     {
