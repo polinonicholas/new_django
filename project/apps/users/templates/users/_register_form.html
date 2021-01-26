@@ -1,5 +1,5 @@
 <div class="container d-flex justify-content-center">
-  <form id="register_form" class = "recaptcha_form" method="POST" novalidate>
+  <form id="register_form" class = "primary_form js_must" method="POST" novalidate>
     {%csrf_token%}
 	<input type="hidden" name="g-recaptcha-response" id='recaptcha_v3'>
 	<fieldset class="form-group">
@@ -12,7 +12,7 @@
 	   	  </details>
 	   	</div>
 	  </legend>
-	  <div id="non_field_error" class="form_field">
+	  <div class="form_field">
 	  	<div id="non_field_error" class="d-flex justify-content-center">
 	    {{ form.non_field_errors }}
 	    </div>

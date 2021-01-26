@@ -183,22 +183,11 @@ AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL = None
 AWS_S3_REGION_NAME='us-east-2'
 
-
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'  
-# MAILER_EMAIL_BACKEND = EMAIL_BACKEND  
-# EMAIL_HOST = 'your_mail_server'  
-# EMAIL_HOST_PASSWORD = 'your_password'  
-# EMAIL_HOST_USER = 'your_email'  
-# EMAIL_PORT = 465  
-# EMAIL_USE_SSL = True  
-
-
-
-
 CACHES = {
     'default': {
         'BACKEND': 'django_redis.cache.RedisCache',
         'LOCATION': 'redis://127.0.0.1:6379/1',
+        'TIMEOUT': 10,
         'OPTIONS': {
             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
         }

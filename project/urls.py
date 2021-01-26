@@ -2,10 +2,9 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
-from project.apps.users.views import register, profile, email_confirmation, validate_registration, EmailLoginView
-from django.contrib.auth.views import (LoginView, 
-PasswordResetCompleteView, PasswordResetDoneView, PasswordResetConfirmView, 
-PasswordResetView, LogoutView)
+from project.apps.users.views import (register, profile, email_confirmation, 
+    validate_registration, EmailLoginView, PasswordReset, PasswordResetConfirm,)
+from django.contrib.auth.views import PasswordResetDoneView, LogoutView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -15,10 +14,9 @@ urlpatterns = [
     path('register/', register, name ='register'),
     path('profile/', profile, name ='profile'),
     path('login/', EmailLoginView.as_view(template_name ='users/login.html'), name ='login'),
-    path('password-reset-complete/', PasswordResetCompleteView.as_view(template_name ='users/password_reset_complete.html'), name ='password_reset_complete'),
-    path('password_reset_done/', PasswordResetDoneView.as_view(template_name ='users/password_reset_done.html'), name ='password_reset_done'),
-    path('password-reset-confirm/<uidb64>/<token>/', PasswordResetConfirmView.as_view(template_name ='users/password_reset_confirm.html'), name ='password_reset_confirm'),
-    path('password-reset/', PasswordResetView.as_view(template_name ='users/password_reset.html'), name ='password_reset'),
+    path('email-sent/', PasswordResetDoneView.as_view(template_name ='users/email_sent.html'), name ='email-sent'),
+    path('password-reset-confirm/<uidb64>/<token>/', PasswordResetConfirm.as_view(template_name ='users/password_reset_confirm.html'), name ='password_reset_confirm'),
+    path('password-reset/', PasswordReset.as_view(template_name ='users/password_reset.html'), name ='password_reset'),
     path('logout/', LogoutView.as_view(template_name ='users/logout.html'), name ='logout'),
     path('activate/<uidb64>/<token>/',email_confirmation, name='email_confirmation'),
 ]

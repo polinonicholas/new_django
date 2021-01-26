@@ -1,7 +1,6 @@
 const form  = $("#recaptcha_form");
 const formError = $("#non_field_error");
 const submitButton = $(".submit_register");
-const toggleButton = $("#password_toggle");
 
 const username = $("#id_username");
 const usernameError = $("#id_username").parents(".field_div").siblings(".error_div").children("div.error");
@@ -35,17 +34,6 @@ $(document)
         username.addClass("field_invalid").removeClass("field_valid");
         usernameError.html("Letters, digits, and underscores only, please.").css({"display":"block"});
         }
-    // password toggle function
-    toggleButton.click(function(){
-      if (password1.attr("type") === "password"){
-        toggleButton.html("HIDE PASSWORD");
-        password1.attr("type", "text")
-      }
-      else{
-        toggleButton.html("SHOW PASSWORD");
-        password1.attr("type", "password")
-      }
-    });
 
 // if any fields change, ajax call
 $(".register_field")
@@ -260,7 +248,6 @@ function check_recaptcha_fail(){
     {
       $("#recaptcha_v2").attr("data-sitekey","6LfDxNsZAAAAAFokK2IQeigtINMiV9D1RtK54ozM");
       $("#recaptcha_v2").css({"display": "inline"});
-
       username.prop('disabled', false).addClass("field_valid");
       usernameSymbol.css({"display": "inline-block"});
       email.prop('disabled', false).addClass("field_valid");
@@ -268,8 +255,5 @@ function check_recaptcha_fail(){
       password1.prop('disabled', false).focus();
       password1.addClass("field_invalid");
       password1Error.html("Re-enter a strong password, please.").css({"display":"block"});
-       
-      
     }
-    
 }

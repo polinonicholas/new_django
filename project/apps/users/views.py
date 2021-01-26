@@ -1,6 +1,7 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect, render
 from django.contrib import messages
-from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm, Email_Login
+from .forms import (UserRegisterForm, UserUpdateForm, ProfileUpdateForm, 
+	Email_Login, RequestPassReset, NewPasswordForm)
 from django.contrib.auth import get_user_model
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.decorators import login_required
@@ -11,25 +12,27 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
 from django.core.mail import send_mail
+import mailer
+from . commands import email_now
 from django.http import HttpResponse, JsonResponse
 from django.contrib.sites.shortcuts import get_current_site
 from django.conf import settings
 from project.customized_classes import DivErrorList
-
-
-
-
 from . variables import (expires, check_profanity, check_password_alpha, 
 check_password_similarity, check_email, check_username)
 from . variables import check_password_commonality as cpc
 from django.views.decorators.cache import never_cache
+from django.contrib.auth.views import LoginView, PasswordResetView, PasswordResetConfirmView,PasswordResetCompleteView
+from django.urls import reverse_lazy
+from django.utils.translation import gettext_lazy as _
+
 
 UserModel = get_user_model()
 
 @never_cache
 def register(request):
 	if request.user.is_authenticated:
-		return redirect('login')
+		return redirect('/')
 	if request.method == 'POST':
 		# grecaptcha v2/v3
 		form = UserRegisterForm(request.POST, error_class=DivErrorList)
@@ -49,14 +52,14 @@ def register(request):
 				recaptcha_pass = True
 			elif score < .9:
 				form.add_error(None, "You did not pass Google's reCAPTCHA v3, \
-					please re-enter your password and complete registration using v2 checkbox:")
+					please re-enter your password and complete registration using v2 checkbox:" + str(score))
 		#else load v2 via jquery, blank form and check for v2 success
 		else:
 			if response_v2['success'] == True:
 				recaptcha_pass = True
 			elif response_v2['success'] != True:				
 				form.add_error(None, "You did not pass Google's reCAPTCHA v3, \
-					please re-enter your password and complete registration using v2 checkbox:")
+					please re-enter your password and complete registration using v2 checkbox:"+ str(secret_v3))
 		# save user as inactive, then send activation email. Convert UN to lower.
 		if form.is_valid() and recaptcha_pass:
 			user = form.save(commit=False)
@@ -100,23 +103,20 @@ def email_confirmation(request, uidb64, token):
     	user.save()
     	messages.success(request, "Thank you for confirming, you can now login\
     		with credentials.")
-    	from . import Email_Login
-    	form = AuthenticationForm(initial={"username": user.username})
-    	return render (request, 'users/login.html', {'form': form})
+    	return redirect('login')
     elif user.is_active:
     	messages.success(request, "Your account is active, you can now login.")
-    	from django.contrib.auth.forms import AuthenticationForm
-    	form = AuthenticationForm(initial={"username": user.username})
-    	return render (request, 'users/login.html', {'form': form})
+    	return redirect('login')
     elif not user.is_active and not default_token_generator.check_token(user, token):
     	messages.warning(request, "Your activation link is invalid. Please \
     		change your password to activate your account.")
-    	from django.contrib.auth.forms import PasswordResetForm
-    	form = PasswordResetForm(initial={"email": user.email})
-    	return render(request, 'users/password_reset.html', {'form':form})
+    	return redirect('password_reset')
     else:
     	messages.warning(request, "Your activation link is invalid.")
     	return redirect('register')
+
+
+
 @login_required(redirect_field_name='after-login')
 def profile(request):
 	if request.method == 'POST':
@@ -181,6 +181,66 @@ def validate_registration(request):
 	len(password1) >=8 and not data['password_no_alpha']:
 		data['password_pass'] = True
 	return JsonResponse(data)
-from django.contrib.auth.views import LoginView
+
+
 class EmailLoginView(LoginView):
+	def get(self, request, *args, **kwargs):
+		if request.user.is_authenticated:
+			return redirect('/')
+		return super(EmailLoginView, self).get(request, *args, **kwargs)
+
+	
 	form_class = Email_Login
+
+
+class PasswordReset(PasswordResetView):
+	form_class = RequestPassReset
+	success_url = reverse_lazy('email-sent')
+	def get_success_url(self):
+		messages.success(self.request, "Please check your email for confirmation.")
+		return super().get_success_url()
+		
+from django.views.decorators.debug import sensitive_post_parameters
+from django.utils.decorators import method_decorator
+INTERNAL_RESET_SESSION_TOKEN = '_password_reset_token'
+class PasswordResetConfirm(PasswordResetConfirmView):
+	form_class = NewPasswordForm
+	reset_url_token = 'set-password'
+	success_url = reverse_lazy('login')
+
+	@method_decorator(sensitive_post_parameters())
+	@method_decorator(never_cache)
+	def dispatch(self, *args, **kwargs):
+		assert 'uidb64' in kwargs and 'token' in kwargs
+		self.validlink = False
+		self.user = self.get_user(kwargs['uidb64'])
+
+		if self.user is not None:
+			token = kwargs['token']
+			if token == self.reset_url_token:
+				session_token = self.request.session.get(INTERNAL_RESET_SESSION_TOKEN)
+				if self.token_generator.check_token(self.user, session_token):
+
+				# If the token is valid, display the password reset form.
+					self.validlink = True
+					return super().dispatch(*args, **kwargs)
+			else:
+				if self.token_generator.check_token(self.user, token):
+					# Store the token in the session and redirect to the
+					# password reset form at a URL without the token. That
+					# avoids the possibility of leaking the token in the
+					# HTTP Referer header.
+					self.request.session[INTERNAL_RESET_SESSION_TOKEN] = token
+					redirect_url = self.request.path.replace(token, self.reset_url_token)
+					return redirect(redirect_url)
+
+				else:
+					messages.info(self.request, "Password reset link was invalid, you can request a new one below.")
+					return redirect('password_reset')
+
+		# Display the "Password reset unsuccessful" page.
+		return self.render_to_response(self.get_context_data())
+
+	def get_success_url(self, *args, **kwargs):
+		messages.success(self.request, "Password update successful.")
+		return super().get_success_url()

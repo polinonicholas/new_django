@@ -13,9 +13,15 @@
     <link rel="stylesheet" type="text/css" href="{%static 'css/main.css'%}">
     <link rel="stylesheet" type="text/css" href="{%static 'css/navigation.css'%}">
     <link rel="icon" type="image/png" href="{% static 'images/favicon.ico' %}"/>
+    {% if title %}
+    <title>{{title}}</title>
+    {% else %}
+    <title>Navolino</title>
+    {% endif %}
   {% endblock head %}
   </head>
   <body>
+    {% include "_js_suggest.html" %}
     {% include "_navigation.html" %}
     {%if messages%}
       {%for message in messages%}

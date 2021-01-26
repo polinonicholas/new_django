@@ -2,41 +2,19 @@
 <!-- Unique CSS -->
 {% block head %}
 {{ block.super }}
-
+<link rel="stylesheet" type="text/css" href="{%static 'users/css/login.css'%}">
 {% endblock head %}
 
 <!-- Unique Content -->
 {% block content %}
 {{ block.super }}
-<div>
-	<form method="POST">
-		{%csrf_token%}
-		<fieldset class = "form-group">
-			<legend class = "">Login</legend>
-			{{form.as_p}}
-			
-		</fieldset>
-
-		<div class= "form-group">
-			<button class = "" type ="submit">Login</button>
-		</div>
-
-	</form>
-
-	<div class="border-top pt-3"></div>
-	<small class ="text-muted">
-		Create an account: <a class= "ml-2" href="{%url 'register'%}">Sign Up Now!</a>
-	</small>
-	<small class ="text-muted">
-		Reset password: <a class= "ml-2" href="{%url 'password_reset'%}">Reset Password</a>
-	</small>
-	</div>
+{% include "users/_login_form.html" %}
 {% endblock content %}
 
 <!-- Unique Scripts -->
 {% block scripts %}
 {{ block.super }}
-
+<script src="{%static 'users/js/login.js'%}"></script>
 {% endblock scripts %}
 
 
