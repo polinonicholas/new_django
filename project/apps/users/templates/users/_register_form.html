@@ -1,56 +1,57 @@
-<div class="container d-flex justify-content-center">
-  <form id="register_form" class = "primary_form js_must" method="POST" novalidate>
-    {%csrf_token%}
-	<input type="hidden" name="g-recaptcha-response" id='recaptcha_v3'>
-	<fieldset class="form-group">
-	  <legend class="form_legend p-2">
-	    <span class = "d-flex justify-content-center">Create Your Account</span>
-	    <div class="d-flex justify-content-center">
-	      <details id = "form_details">
-	        <summary>Guidelines</summary>
-	        {% include "users/_register_form_guidelines.html" %}
-	   	  </details>
-	   	</div>
-	  </legend>
-	  <div class="form_field">
-	  	<div id="non_field_error" class="d-flex justify-content-center">
-	    {{ form.non_field_errors }}
-	    </div>
-	  </div>
-	  {% for field in form %}
-	  {% if field.field.required %}
-	  <div class="form_field required"> 
-	  {% else %}
-	  <div class="form_field">
-	  {% endif %}
-	    <div class= "d-flex justify-content-center field_div">
-	    <span style="display:none" class="validate_symbol" aria-live="polite">&#10003;</span>
-	  {{ field }}
-	  	</div>
-	  	<div class= "d-flex justify-content-center error_div">
-	  	<div style = "display:none" class="error" aria-live="polite"></div>
-	  	{% if field.name == 'password1' %}
-			<div style = "display:none" class="help"id="password_toggle">SHOW PASSWORD</div>
-		  {% endif %}
-	  	</div>
-		{{field.errors}}
-	  </div>
-		  <!-- {% if field.name == 'password1' %}
-			<div style = "display:none" class="help"id="password_toggle">SHOW PASSWORD</div>
-		  {% endif %} -->
-	  {% endfor %}
+<div class="container">
+  <form id="register_form" class = "primary_form js_must" method="POST" novalidate>{%csrf_token%}
+    <input type="hidden" name="g-recaptcha-response" id='recaptcha_v3'>
+    <fieldset class="form-group">
+      <legend class="form_legend p-2">
+        <span>Create Your Account</span>
+        <div>
+          <details class="form_details">
+            <summary>Guidelines</summary>{% include "users/_register_form_guidelines.html" %}
+          </details>
+        </div>
+      </legend>
+      <div id="non_field_error">{{ form.non_field_errors }}</div>
+      {% for field in form %}{% if field.field.required %}
+      <div class="form-group required">{% else %}
+      <div class="form-group">{% endif %}
+        <div>
+          <div class="help">{{ field.label_tag }}</div>
 
-	</fieldset>
-	<div class="form-group text-center">
-		<div class="g-recaptcha d-flex justify-content-center" id="recaptcha_v2" style = "display:none"> </div>
-	  <button class="btn btn-primary submit_register" type="submit" disabled>Sign Up</button>
-	  <div><small id="complete_request">Please complete form before submission.</small></div>
-	  <div class="p-2">
-	  	<small class="separate">Existing accounts: <a class= "" href="{%url 'login'%}">Sign In</a></small>
-	    <small>Forgotten credentials: <a class= "" href="{%url 'password_reset'%}">Reset Password</a></small>
-	    
-	  </div>
-	</div>
+        </div>
+        <div class= "field_div">
+          <span style="display:none" class="validate_symbol" aria-live="polite">&#10003;</span>
+          {{ field }}{% if 'password' in field.field.widget.attrs.class %}
+
+          <span class="fa fa-eye password_toggle"></span>
+          <button tabindex="0" id="random_password" type="button">Random Password</button>{% endif %}
+        </div>
+        <div class="errorlist">
+       	  <div style = "display:none" class="error" aria-live="polite">
+            <i class="fa fa-exclamation-triangle"></i>
+            &nbsp;
+            <span></span>
+          </div>
+        </div>
+        {{field.errors}}
+      </div>{% endfor %}
+      <div class="form-group">
+        <div class="g-recaptcha d-flex justify-content-center" id="recaptcha_v2" style = "display:none"></div>
+        <div class="mb-1 d-flex justify-content-center">
+          <div class="link_flow">By signing up, you acknowledge the <a href="#">terms</a> and <a href="#">privacy policy.</a>
+          </div>
+        </div>
+        <button id="submit_primary"class="btn btn-primary" type="submit" disabled>Sign Up</button>
+      </div>
+    </fieldset>
+    <div class="d-flex justify-content-center"> 
+      <div class="row link_flow"> 
+        <i class="p-1">Existing accounts: <a href="{%url 'login'%}">Sign In</a></i>
+        <i class="p-1">Forgotten credentials: <a href="{%url 'password_reset'%}">Reset Password</a></i>
+      </div>
+    </div>
   </form>
 </div>
 
+
+
+      

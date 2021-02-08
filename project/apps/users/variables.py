@@ -16,8 +16,6 @@ MAX_BIO_LENGTH = 1000
 def random_image():
 	return f'default_pics/default_\
 {random.choice(range(1, DEFAULT_IMAGE_COUNT + 1))}{image_format}'
-
-
 #expiration function
 import datetime
 def expires(days):
@@ -41,7 +39,7 @@ def check_password_commonality(password):
 			passwords = {p.strip() for p in common_passwords_lines}
 			if password.lower().strip() in passwords:
 				return True
-			return False
+		return False
 def check_profanity(string):
 	if string is not None:
 		import os
@@ -59,16 +57,12 @@ def check_profanity(string):
 			for bad_word in profanity:
 				if bad_word in word:
 					return True
-		return False
-
-
+	return False
 # return true if password is all digits
 def check_password_alpha(password):
+	if password != None:
 		return password.isdigit()
-
-
-
-
+	return False
 # check if email input meets Django's default validation
 def check_email(email):
 	from django.core.validators import validate_email
@@ -78,18 +72,13 @@ def check_email(email):
 	except ValidationError:
 		email_valid = False
 	return email_valid
-
-
 # check if username input meets Django's default validation
 def check_username(username):
 	if username != None and len(username) != 0:
 		allowed = "_"
 		return all(c in allowed or c.isalpha() or c.isdigit() for c in username)
 	return False
-
-
 #check if password input is too similar to personal information
-
 def check_password_similarity(password, username, email):
 		password_too_similar = False
 		if password != None:
@@ -102,11 +91,7 @@ def check_password_similarity(password, username, email):
 					if SequenceMatcher(a=password.lower(), 
 						b=part.lower()).quick_ratio() >= .7:
 						password_too_similar = True
-			return password_too_similar
-
-
-
-
+		return password_too_similar
 logger = logging.getLogger(__name__)
 class InvalidLoginAttemptsCache(object):
     @staticmethod

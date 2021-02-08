@@ -11,6 +11,7 @@ class DivErrorList(ErrorList):
 		if not self: 
 			return ''
 		return mark_safe('<div class="errorlist">%s</div>' % ''\
-		.join(['<div class="error">%s</div>' % e for e in self]))
+		.join(['<div class="error"><i class="fa \
+			fa-exclamation-triangle"></i>&nbsp;<span>%s</span></div>' % e for e in self]))
 
 

@@ -1,0 +1,83 @@
+<div class="container">
+  <form id="profile_form" class = "primary_form js_must" method="POST" enctype = "multipart/form-data">{%csrf_token%}
+    <input type="hidden" name="g-recaptcha-response" id='recaptcha_v3'>
+    <fieldset class="form-group">
+      <legend class="form_legend p-2">
+        <span>Hey, {{user.username}}. Update your profile here.</span>
+        <!-- <div>
+          <details class="form_details">
+            <summary>Guidelines</summary>{% include "users/_register_form_guidelines.html" %}
+          </details>
+        </div> -->
+      </legend>
+      <div class="d-flex justify-content-center">
+        <img class="profile_img rounded-circle" src="{{user.image.url}}">
+      </div>
+      <div id="non_field_error">{{ form.non_field_errors }}</div>
+      {% for field in p_form %}{% if field.field.required %}
+      <div class="form-group required">{% else %}
+      <div class="form-group">{% endif %}
+        <div>
+          <div class="help">{{ field.label_tag }}</div>
+        </div>
+        <div class= "field_div">
+          <span style="display:none" class="validate_symbol" aria-live="polite">&#10003;</span>
+          {{ field }}{% if 'password' in field.field.widget.attrs.class %}
+
+          <span class="fa fa-eye password_toggle"></span>
+          <button tabindex="0" id="random_password" type="button">Random Password</button>{% endif %}
+        </div>
+        <div class="errorlist">
+       	  <div style = "display:none" class="error" aria-live="polite">
+            <i class="fa fa-exclamation-triangle"></i>
+            &nbsp;
+            <span></span>
+          </div>
+        </div>
+        {{field.errors}}
+      </div>{% endfor %}
+
+      {% for field in u_form %}{% if field.field.required %}
+      <div class="form-group required">{% else %}
+      <div class="form-group">{% endif %}
+        <div>
+          <div class="help">{{ field.label_tag }}</div>
+        </div>
+        <div class= "field_div">
+          <span style="display:none" class="validate_symbol" aria-live="polite">&#10003;</span>
+          {{ field }}{% if 'password' in field.field.widget.attrs.class %}
+
+          <span class="fa fa-eye password_toggle"></span>
+          <button tabindex="0" id="random_password" type="button">Random Password</button>{% endif %}
+        </div>
+        <div class="errorlist">
+          <div style = "display:none" class="error" aria-live="polite">
+            <i class="fa fa-exclamation-triangle"></i>
+            &nbsp;
+            <span></span>
+          </div>
+        </div>
+        {{field.errors}}
+      </div>{% endfor %}
+
+      <div class="form-group">
+        <div class="g-recaptcha d-flex justify-content-center" id="recaptcha_v2" style = "display:none"></div>
+        <div class="mb-1 d-flex justify-content-center">
+          <div class="link_flow">
+          </div>
+        </div>
+        <button id="submit_primary"class="btn btn-primary" type="Update">Make Changes</button>
+      </div>
+    </fieldset>
+    <div class="d-flex justify-content-center"> 
+      <div class="row link_flow"> 
+        <i class="p-1">Change your password: <a href="{%url 'password_change'%}">Password Change</a></i>
+        <i class="p-1">Delete account: <a href="{%url 'password_reset'%}">Delete Account</a></i>
+      </div>
+    </div>
+  </form>
+</div>
+
+
+
+      

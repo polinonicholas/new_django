@@ -2,15 +2,19 @@
 <!-- Unique CSS -->
 {% block head %}
 {{ block.super }}
-
+<link rel="stylesheet" type="text/css" href="{%static 'users/css/profile.css'%}">
 {% endblock head %}
 
 <!-- Unique Content -->
 {% block content %}
 {{ block.super }}
-<div class="">
+{% include 'users/profile_form.html'%}
+
+
+
+<!-- <div class="">
   <div class="">
-    <img class="" src="{{user.profile.image.url}}">
+    <img class="" src="{{user.image.url}}">
     <div class="">
       <h2 class="">{{user.username}}</h2>
       <p class="">{{user.email}}</p>
@@ -27,7 +31,7 @@
       <button class = "" type ="submit">Update</button>
     </div>
   </form>
-</div>
+</div> -->
 {% endblock content %}
 
 <!-- Unique Scripts -->

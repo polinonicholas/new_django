@@ -1,0 +1,54 @@
+.primary_form input[type=file],
+.primary_form input[type=file]:hover,
+.primary_form input[type=file]:visited
+.primary_form input[type=file]:active
+{
+	border:none;
+	padding:0;
+	overflow: hidden;
+	box-shadow:none;
+
+}
+.primary_form input[type=file]:focus
+{
+	font-weight:bold;
+}
+
+/*chrome/edge*/
+.primary_form input[type=file]::-webkit-file-upload-button
+{
+	border-radius:.5em;
+  	cursor:pointer;
+  	font-size:.75em;
+
+
+}
+.primary_form input[type=file]::-webkit-file-upload-button:hover,
+.primary_form input[type=file]::-webkit-file-upload-button:focus,
+.primary_form input[type=file]::-webkit-file-upload-button:active
+{
+  background-color: #e6e6e6;
+  outline:none;
+
+}
+/*firefox*/
+.primary_form input[type=file]::file-selector-button
+{
+  border-radius:.5em;
+  cursor:pointer;
+  
+}
+.primary_form input[type=file]::file-selector-button:hover,
+.primary_form input[type=file]::file-selector-button:focus,
+.primary_form input[type=file]::file-selector-button:active
+{
+  background-color: #e6e6e6;
+  outline:none;
+}
+
+.profile_img
+{
+	height:10em;
+	width:10em;
+}
+
