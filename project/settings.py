@@ -32,13 +32,15 @@ ALLOWED_HOSTS = []
 
 # Application definition
 INSTALLED_APPS = [
-    'project.apps.blog',
-    'project.apps.categories',
-    'project.apps.comments',
+    
+    'project.apps.categories.apps.CategoriesConfig',
+    # 'project.apps.comments.apps.CommentsConfig',
     'project.apps.users.apps.UsersConfig',
+    'markdownx',
     'mptt',
     'mailer',
     'django.contrib.admin',
+    'project.apps.blog.apps.BlogConfig',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -72,6 +74,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.request',
+                'project.processors.all_categories'
 
 
                 
@@ -150,6 +153,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 #after login, redirect to this route
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/login/'
+LOGOUT_REDIRECT_URL = LOGIN_URL
 
 #SEO settings
 MAX_DESCRIPTION_LENGTH = 140
@@ -176,19 +180,13 @@ SERVER_EMAIL = EMAIL_HOST_USER
 RECAPTCHA_PRIVATE_KEY_V3 = os.environ['RECAPTCHA_PRIVATE_KEY_V3']
 RECAPTCHA_PRIVATE_KEY_V2 = os.environ['RECAPTCHA_PRIVATE_KEY_V2']
 
-# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-# AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
-# AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
-# AWS_STORAGE_BUCKET_NAME = os.environ['AWS_STORAGE_BUCKET_NAME']
-# AWS_S3_FILE_OVERWRITE = False
-# AWS_DEFAULT_ACL = None
-# AWS_S3_REGION_NAME='us-east-2'
+
 
 CACHES = {
     'default': {
         'BACKEND': 'django_redis.cache.RedisCache',
         'LOCATION': 'redis://127.0.0.1:6379/1',
-        'TIMEOUT': 10,
+        'TIMEOUT': None,
         'OPTIONS': {
             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
         }
@@ -200,3 +198,11 @@ AUTH_USER_MODEL = 'users.User'
 AUTHENTICATION_BACKENDS = [
     'project.apps.users.backends.CustomModelBackend',
 ]
+
+# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
+# AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
+# AWS_STORAGE_BUCKET_NAME = os.environ['AWS_STORAGE_BUCKET_NAME']
+# AWS_S3_FILE_OVERWRITE = False
+# AWS_DEFAULT_ACL = None
+# AWS_S3_REGION_NAME='us-east-2'

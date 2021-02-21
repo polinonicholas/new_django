@@ -1,0 +1,65 @@
+{% load blog %}
+<h4 class="ml-1">Recents {{category}} Posts</h4>
+<div class="posts row last_row">
+
+{% for post in posts %}
+  <div class="col-sm-6 col-md-4 col-xl-3 post">
+  	<div class="inner_post">
+	  	<span><h5 class="post_title"> <a href="{%url 'post-detail' post.pk post.slug%}">{{ post.title }}</a></h5></span>
+	  	<div class="post_content">{{post.content|truncatechars:150|markdown|safe }}</div>
+	  	<br>
+	  	<br>
+	  	<div class="post_meta">
+	      <span>By: <a href="">{{ post.author.username }}</a></span>
+	      <br>
+	      <span>Age: {{ post.date_posted|timesince|upto:','}}</span>
+	      <br>
+	      <span>Topic: <a href="{%url 'category-detail' post.category.url %}">{{post.category}}</a></span>
+	    </div>
+  	</div>
+  </div>
+{%endfor%}
+</div>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	{%if is_paginated%}
+			{%if page_obj.has_previous%}
+			<a class = "btn btn-outline-info mb-4"href="?page=1">First</a>
+			<a class = "btn btn-outline-info mb-4"href="?page={{page_obj.previous_page_number}}">Previous</a>
+			{%endif%}
+	
+
+		{%for num in page_obj.paginator.page_range%}
+
+			{%if page_obj.number == num%}
+			<a class = "btn btn-info mb-4"href="?page={{num}}">{{num}}</a>
+			{%elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3'%}
+			<a class = "btn btn-outline-info mb-4"href="?page={{num}}">{{num}}</a>
+
+			{%endif%}
+		{%endfor%}
+
+		{%if page_obj.has_next%}
+			<a class = "btn btn-outline-info mb-4"href="?page={{page_obj.next_page_number}}">Next</a>
+			<a class = "btn btn-outline-info mb-4"href="?page={{page_obj.paginator.num_pages}}">Last</a>
+		{%endif%}
+	{%endif%}

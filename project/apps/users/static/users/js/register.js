@@ -51,7 +51,7 @@ function validate_register()
         submitButton.prop('disabled', false);
         $(form).find(".register_field").addClass("field_valid").removeClass("field_invalid");
         $(form).find(".errorlist").children("div.error").slideUp("fast");
-        $(form).find(".validate_symbol").css({"display": "inline-block"})
+        $(form).find(".validate_symbol").css({"display": "inline-block"});
         return;
       }
       else

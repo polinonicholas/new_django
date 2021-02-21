@@ -10,24 +10,27 @@ class PostListView(ListView):
 	template_name = 'blog/blog_base.html'
 	context_object_name = 'posts'
 	ordering = ['-date_posted']
-	paginate_by = 5 
-
+	paginate_by = 15
 
 class PostsByCategoryView(ListView):
 	ordering = 'id'
 	paginate_by = 10
-	template_name = 'categories/items_by_category.html'
+	template_name = 'categories/category_base.html'
+	context_object_name = 'posts'
 	def get_queryset(self):
 		# https://docs.djangoproject.com/en/3.1/topics/class-based-views/generic-display/#dynamic-filtering
 		# the following category will also be added to the context data
-		self.category = Category.objects.get(slug=self.kwargs['slug'])
-		queryset = Post.objects.filter(category=self.category)
+		# self.category = Category.objects.get(slug=self.kwargs['slug'])
+		# queryset = Post.objects.filter(category=self.category)
+		self.category_name = Category.objects.get(url=self.kwargs['url'])
+		self.category = Category.objects.get(url=self.kwargs['url']).get_descendants(include_self=True)
+		queryset = Post.objects.filter(category__in=self.category)
 		# need to set ordering to get consistent pagination results
 		queryset = queryset.order_by(self.ordering)
 		return queryset
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
-		context['category'] = self.category
+		context['category'] = self.category_name
 		return context
 
 

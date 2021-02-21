@@ -2,7 +2,7 @@
 <!-- Unique CSS -->
 {% block head %}
 {{ block.super }}
-	<link rel="stylesheet" type="text/css" href="{%static 'blog/css/main.css'%}">
+<link rel="stylesheet" type="text/css" href="{%static 'blog/css/main.css'%}">
 {% endblock head %}
 
 <!-- Unique Content -->
@@ -10,12 +10,13 @@
 
 
 {{ block.super }}
+{% include 'blog/_posts.html' %}
 {% endblock content %}
 
 <!-- Unique Scripts -->
 {% block scripts %}
 {{ block.super }}
-	<script src="{%static 'blog/js/main.js'%}"></script>
+<script src="{%static 'blog/js/main.js'%}"></script>
 {% endblock scripts %}
 
 

@@ -1,10 +1,10 @@
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 from django.conf.urls.static import static
 from django.conf import settings
 from project.apps.users.views import (register, profile, email_confirmation, 
     validate_registration, EmailLoginView, PasswordReset, PasswordResetConfirm,
-    password_change, validate_pw_change)
+    password_change, validate_pw_change, validate_login)
 from django.contrib.auth.views import PasswordResetDoneView, LogoutView
 
 urlpatterns = [
@@ -12,9 +12,10 @@ urlpatterns = [
     path('', include('project.apps.blog.urls')),
     path('ajax/validate_registration/', validate_registration, name='validate_registration'),
     path('ajax/validate_pw_change/', validate_pw_change, name='validate_pw_change'),
-    path('categories/', include('project.apps.categories.urls')),
+    path('ajax/validate_login/', validate_login, name='validate_login'),
+    
     path('register/', register, name ='register'),
-    path('private-profile/', profile, name ='private-profile'),
+    path('private-profile/', profile, name ='private_profile'),
     path('login/', EmailLoginView.as_view(template_name ='users/login.html'), name ='login'),
     path('email-sent/', PasswordResetDoneView.as_view(template_name ='users/email_sent.html'), name ='email-sent'),
     path('password-reset-confirm/<uidb64>/<token>/', PasswordResetConfirm.as_view(template_name ='users/password_reset_confirm.html'), name ='password_reset_confirm'),
@@ -22,6 +23,9 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(template_name ='users/logout.html'), name ='logout'),
     path('activate/<uidb64>/<token>/',email_confirmation, name='email_confirmation'),
     path('password-change/',password_change, name='password_change'),
+    path('markdownx/', include('markdownx.urls')),
+    #keep this on the bottom
+    re_path(r'^(?P<url>[-\w/]+)/', include('project.apps.categories.urls')),
 ]
 
 if settings.DEBUG:

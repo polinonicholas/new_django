@@ -1,15 +1,19 @@
-.navbar{
+.navbar
+{
   height:78px;
-  
 }
-.navbar-brand {
+.navbar-brand
+{
     position: absolute;
     left: 50%;
     transform:translateX(-50%);  /* 50% of logo width */
     display: block;
 }
-@media (max-width: 991.98px) {
-  .navbar .navbar-collapse {
+
+@media (max-width: 991.98px) 
+{
+  .navbar .navbar-collapse 
+  {
     background: rgba(0, 0, 0, 1);
     opacity: 1;
     position: fixed;
@@ -20,11 +24,13 @@
     overflow-y: scroll;
     overflow-x: hidden;
   }
-  .navbar .navbar-collapse.collapse.show {
-    opacity: 1;
-    z-index: 1000;
-  }
-.navbar-toggler{
+}
+.navbar .navbar-collapse.collapse.show
+{
+  opacity: 1;
+}
+.navbar-toggler
+{
   z-index: 1000;
   outline-color:black;
   color:blue;
@@ -34,25 +40,81 @@
   color:white;
 }
 .navbar-toggler:focus,
-.navbar-toggler-icon:focus {
+.navbar-toggler-icon:focus
+{
     outline-color:gray;
 }
 .navbar-toggler:active
 {
-  outline-color:#5781E7;
+  outline-color:black;
 }
 
-
-
-.fa-angle-up, .fa-angle-down
+.nav_img
 {
-color:black;
+  height:1em;
+  width:1em;
+}
+.register_link
+{
+  text-align:bottom;
+}
+.popover__wrapper 
+{
+  position: absolute;
+  left: 100%;
+  transform:translateX(-200%);
+  display: block;
+  z-index: 1000;
+}
+.popover__content 
+{
+  display:none;
+  position: absolute;
+  right:-1.25em;
+  background-color: #f2f2f2;
+  transform:translateY(100%);
+  bottom:.25em;
+}
+.popover__content ul
+{
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  border-right: 1em solid #4d79ff;
+}
+.popover__content li
+{
+  border-bottom: 1px solid black;
+  font-size:.75em;
+  padding:0;
+}
+.popover__content a
+{
+  color:black;
+}
+.nav_popover:focus
+{
+  outline:none;
+}
+.popover__wrapper:focus .popover__content,
+.popover__wrapper:focus-within .popover__content
+{
+  display:block;
+}
+.popover__wrapper:hover,
+.popover__wrapper:focus
+{
+  color:#4d79ff;
+  cursor:pointer;
+
 }
 
+.nav_popover
+{
+  font-size:1.25em;
 
-
-
-/*.navbar-light .navbar-nav .nav-link {
-    color: red;
-}*/
-
+}
+.popover__wrapper:focus
+{
+  outline:none;
+}

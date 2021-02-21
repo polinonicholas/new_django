@@ -1,0 +1,51 @@
+
+.all_categories ul
+{
+	list-style-type: none;
+}
+
+.all_categories
+{
+	width:100%;
+	margin-right:auto;
+	margin-left:auto;
+	margin: 0 auto;
+}
+.category_group
+{
+margin: 0 auto;
+width:100%;
+}
+.top_category
+{
+	
+}
+
+.sub_categories
+{
+	
+}
+.sub_category
+
+{
+}
+
+
+.category_group li:nth-of-type(even) {
+    background: #f2f2f2;
+}
+
+.card
+{
+	
+margin: 0 auto;
+width:10%;
+column-gap: 0;
+}
+
+.card-columns
+{
+	margin: 0 auto;
+	width:100%;
+	column-gap: .25em;
+}

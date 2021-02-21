@@ -6,10 +6,12 @@ from django.urls import reverse
 from django.utils.text import slugify
 from mptt.models import TreeForeignKey
 from django.conf import settings
+from markdownx.models import MarkdownxField
+from markdownx.utils import markdownify
 
 class Post(models.Model):
 	title = models.CharField(max_length = settings.MAX_TITLE_LENGTH)
-	content = models.TextField()
+	content = MarkdownxField()
 	date_posted = models.DateTimeField(default = timezone.now)
 	author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete= models.CASCADE)
 	category = TreeForeignKey('categories.Category', on_delete=models.CASCADE)
@@ -29,6 +31,5 @@ class Post(models.Model):
 		if not self.slug:
 			self.slug = slugify(self.title)
 		super(Post, self).save(*args, **kwargs)
-		
-	# def get_slug(self):
-	# 	return self.slug
+
+	

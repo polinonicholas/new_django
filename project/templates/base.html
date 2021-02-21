@@ -23,6 +23,7 @@
   <body>
     {% include "_js_suggest.html" %}
     {% include "_navigation.html" %}
+
     {%if messages%}
       {%for message in messages%}
       <div class="alert alert-{{message.tags}} alert-dismissable">{{message}}
@@ -40,6 +41,7 @@
     <script src='https://www.google.com/recaptcha/api.js?render=6LdN7QsaAAAAAPNy5Fr52O3zrV6JQ-d-j4Uookcf'></script>
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <script type="text/javascript" src="{%static 'js/main.js'%}"></script>
+    
     {% endblock scripts %}
   </body>
 {% block breadcrumbs %}{% endblock breadcrumbs %}

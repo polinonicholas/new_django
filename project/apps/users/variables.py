@@ -11,7 +11,12 @@ image_format = '.PNG'
 DEFAULT_IMAGE_COUNT = len([file for file in os.scandir('media/default_pics') 
 	if file.path.endswith(image_format)])
 #maximum length of a user's profile bio field.
-MAX_BIO_LENGTH = 1000
+MAX_BIO_LENGTH = 150
+
+FIELD_NAME_MAPPING = {
+    'username': 'public_id',
+    'email': 'username'
+    }
 #generate random file name from MEDIA_ROOT/default_pics
 def random_image():
 	return f'default_pics/default_\
@@ -131,3 +136,39 @@ class InvalidLoginAttemptsCache(object):
         except Exception as e:
             logger.exception(e.message)
             messages.success(request, str(logger.exception(e.message)))
+
+def data_password(password, data):
+	if password != None and not data.get('password_null', False):
+		if not data.get('password_length', True):
+			data['password_error'] = "8 or more characters, please."
+		elif data.get('password_no_alpha', False):
+			data['password_error'] = "Please don't use all digits."
+		elif data.get('password_too_similar', False):
+			data['password_error'] = 'Password is too similar to personal info.'
+		elif data.get('password_too_common', False):
+			data['password_error'] = 'Password is too common. Be strong, please.'
+		else: 
+			data['password_pass'] = True
+	return data
+
+def data_username(username, data):
+	if username != None and not data.get('username_null', False):
+		if not data.get('username_length', True) or not re.search('[A-Za-z]', username):
+			data['username_error'] = "At least 3 characters and 1 letter, please."
+		elif not data.get('username_valid', True):
+			data['username_error'] = 'Only letters, digits, and underscores, please.'
+		elif data.get('username_taken', False):
+			data['username_error'] = 'Username is taken.'
+		elif data.get('username_profane', False):
+			data['username_error'] = "No profanity, please."
+		else:
+			data['username_pass'] = True
+	return data
+
+def data_email(email, data):
+	if email != None and not data.get('email_null', False):
+		if not data.get('email_valid', True):
+			data['email_error'] = "Enter a valid email, please."
+		else:
+			data['email_pass'] = True
+	return data

@@ -4,7 +4,8 @@ from django.contrib.auth.forms import (UserCreationForm, AuthenticationForm,
 ValidationError, PasswordResetForm, SetPasswordForm)
 # from . models import Profile
 from django.contrib.auth import get_user_model, authenticate, password_validation
-from . variables import check_username, check_profanity, InvalidLoginAttemptsCache
+from . variables import (check_username, check_profanity,
+	InvalidLoginAttemptsCache, FIELD_NAME_MAPPING)
 from project.customized_classes import DivErrorList
 from django.utils.translation import ugettext, ugettext_lazy as _
 import arrow
@@ -80,8 +81,13 @@ class Email_Login(AuthenticationForm):
 
 
 class UserRegisterForm(UserCreationForm):
+	
 	email = forms.EmailField(widget=forms.EmailInput(attrs={
 		'placeholder': 'Email', 'id':'email', 'autocomplete':'username email'}))
+	def add_prefix(self, field_name):
+		# look up field name; return original if not found
+		field_name = FIELD_NAME_MAPPING.get(field_name, field_name)
+		return super(UserRegisterForm, self).add_prefix(field_name)
 	def clean_email(self):
 		email = self.cleaned_data.get('email')
 		# Check to see if any users already exists with this email.
@@ -134,17 +140,34 @@ class UserRegisterForm(UserCreationForm):
 
 
 class UserUpdateForm(forms.ModelForm):
+	error_messages = {
+	'profanity': _("No profanity, please."),
+
+	}
+
 	class Meta: 
 		model = UserModel
 		fields = ['bio']
 		widgets = {'bio': forms.Textarea(attrs={'rows': 2, 'placeholder': '...'})}
 		labels = {'bio': 'What do you say?'}
+		
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
 		self.error_class=DivErrorList
-	
-
+	def clean_bio(self):
+		bio = self.cleaned_data['bio']
+		if check_profanity(bio):
+			raise ValidationError(
+				self.error_messages['profanity'],
+				code='profanity',
+				)
+		return bio
 class UserFileForm(forms.ModelForm):
+	error_messages = {
+        'invalid_image': _(
+            "Select a valid image, please."
+        ),
+    }
 	class Meta:
 		model = UserModel
 		fields = ['image']
@@ -155,6 +178,8 @@ class UserFileForm(forms.ModelForm):
 		# self.fields['image'] = forms.ImageField(label=_('Profile Image'), required=False, 
 		# 	error_messages={'invalid':("Only images, please")}, widget=forms.FileInput({}))
 		self.error_class=DivErrorList
+		self.fields['image'].error_messages = self.error_messages
+
 
 
 

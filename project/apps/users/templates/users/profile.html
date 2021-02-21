@@ -9,34 +9,13 @@
 {% block content %}
 {{ block.super }}
 {% include 'users/profile_form.html'%}
-
-
-
-<!-- <div class="">
-  <div class="">
-    <img class="" src="{{user.image.url}}">
-    <div class="">
-      <h2 class="">{{user.username}}</h2>
-      <p class="">{{user.email}}</p>
-    </div>
-  </div>
-  <form method="POST" enctype = "multipart/form-data">
-  {%csrf_token%}
-    <fieldset class = "form-group">
-      <legend class = "">Update Profile</legend>
-      {{u_form}}
-      {{p_form}}
-    </fieldset>
-    <div class= "form-group">
-      <button class = "" type ="submit">Update</button>
-    </div>
-  </form>
-</div> -->
 {% endblock content %}
 
 <!-- Unique Scripts -->
 {% block scripts %}
 {{ block.super }}
+<script src="{%static 'users/js/primary_form.js'%}"></script>
+<script src="{%static 'users/js/profile.js'%}"></script>
 
 {% endblock scripts %}
 

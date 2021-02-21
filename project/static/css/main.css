@@ -3,7 +3,7 @@ body
   background-color: white;
 }
 
-button:focus, input:focus, summary:focus
+button:focus, input:focus, summary:focus, textarea:focus
 {
   outline:none;
 }
@@ -483,23 +483,20 @@ content:" | ";
   }
 
 }
-
-.submit_tip
-{
-  width:100%;
-  color:blue;
-  font-style: bold;
-}
-
 .hide
 {
  display: none;
  line-height: .1em;
 }
 
-
-.nav_img
+.breadcrumb-item + .breadcrumb-item::before 
 {
-  height:1.25em;
-  width:1.25em;
+  content: ">";
 }
+
+.breadcrumb_nav ol
+{
+  background-color: #f2f2f2;
+}
+
+

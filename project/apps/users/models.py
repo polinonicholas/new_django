@@ -1,11 +1,10 @@
 from django.db import models
-from django.contrib.auth.models import User
 from PIL import Image
+from django.utils import timezone
 from . import variables
-from django.contrib.auth.models import AbstractUser
 from django.utils.translation import gettext_lazy as _
-from django import forms
-# from django.contrib.auth.base_user import BaseUserManager
+from django.contrib.auth.models import AbstractUser
+from . managers import CustomUserManager
 
 class User(AbstractUser):
 	is_active = models.BooleanField(_('active'), default=True)
@@ -16,20 +15,6 @@ class User(AbstractUser):
 		upload_to='profile_pics')
 	bio = models.CharField(max_length=variables.MAX_BIO_LENGTH, blank=True, 
 		null =True)
+	joined = models.DateTimeField(default = timezone.now)
 
-	# objects = UserManager()
-	# class UserManager(BaseUserManager)
-
-
-	
-
-
-
-
-
-
-
-
-	
-    
-    
+	objects = CustomUserManager()

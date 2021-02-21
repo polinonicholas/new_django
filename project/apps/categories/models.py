@@ -4,6 +4,7 @@ from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
 from mptt.models import MPTTModel, TreeForeignKey
+from collections import deque
 
 class Category(MPTTModel):
   name = models.CharField(max_length=variables.MAX_CATEGORY_LENGTH, unique=True,)
@@ -13,6 +14,7 @@ class Category(MPTTModel):
     blank=True,)
   description = models.TextField(max_length=settings.MAX_DESCRIPTION_LENGTH, 
   	null=True, blank=True,)
+  url = models.CharField(max_length=255, blank=True)
   
   class MPTTMeta:
     order_insertion_by = ['name']
@@ -24,10 +26,18 @@ class Category(MPTTModel):
     return self.name
 
   def save(self, *args, **kwargs):
-    if not self.slug:
-      self.slug = slugify(self.name, allow_unicode=False)
+    orig_url = self.url
+    d = deque([slugify(self.name, allow_unicode=False)])
+    if self.parent:
+      qs = list(self.parent.get_ancestors(include_self=True))
+      data = [cat.name for cat in qs]
+      for cat in reversed(data):
+        d.appendleft(slugify(cat, allow_unicode=False))
+    self.slug = slugify(list(d), allow_unicode=False)
+    self.url = '/'.join(list(d))
     super().save(*args, **kwargs)
-
+    if orig_url != self.url:
+      for child in self.get_children():
+        child.save()
   def get_absolute_url(self):
-    return reverse('category-detail', kwargs ={ 'slug': self.slug, })
-
+    return reverse('category-detail', kwargs ={ 'url': self.url, })

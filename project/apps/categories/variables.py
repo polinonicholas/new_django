@@ -1,3 +1,3 @@
 #maximum length for name of Category
-MAX_CATEGORY_LENGTH = 15
+MAX_CATEGORY_LENGTH = 1000
 

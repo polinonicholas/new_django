@@ -1,27 +1,245 @@
+body
+{
+  background-color: white;
+}
+
+button:focus, input:focus, summary:focus, textarea:focus
+{
+  outline:none;
+}
+
+.alert
+{
+  width:100%;
+  text-align:center;
+}
+:disabled
+{
+  cursor: not-allowed;
+}
+
+/*buttons*/
+.btn-primary:enabled:hover
+{
+  background-color: #1a75ff;
+  color:white;
+}
+.btn.btn-primary:disabled
+{
+    background-color: #5f788a;
+    border-color:#5f788a;
+}
+.btn-primary{
+    background-color: #3385ff;
+    color:white;
+    border-color:#4d94ff;
+    width:85%;
+    margin-right:auto;
+    margin-left:auto;
+    display:flex;
+    justify-content: center;
+}
+.primary_form
+{
+  width:100%;
+
+
+}
+.primary_form input, .primary_form textarea 
+{
+  border-radius: .5em;
+  border: 1px solid #DDDDDD;
+}
+
+.primary_form input:focus, .primary_form textarea:focus
+{
+  border: 1px solid #b3c4ff;
+  box-shadow: .125em .25em .45em #b3c4ff;
+  -webkit-transition: box-shadow 0.30s ease-in;
+  -moz-transition: box-shadow 0.30s ease-in;
+  -ms-transition: box-shadow 0.30s ease-in;
+  -o-transition: box-shadow 0.30s ease-in;
+}
+
+.primary_form label
+{
+  padding-bottom:0;
+  padding-top:0;
+  margin-bottom:0px;
+  padding-left: 5%;
+}
+.primary_form input, .primary_form textarea, .primary_form .error
+{
+    width:90%;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top:0px;
+    padding-top:0px;
+    line-height:2em;
+    box-sizing: border-box;
+
+}
+
+.primary_form input, .primary_form textarea
+{
+  padding-left: .25em;
+}
+
+#non_field_error
+{
+  margin-bottom:1em;
+}
+
+.primary_form .field_valid
+{
+  color:black;
+  background-color: white;
+  text-align:left;
+  border-radius: 0em;
+  font-weight:bold;
+  border-width:0px 0px 1px 0px;
+  border-style:none none solid none;
+  width: calc(90% - 1.5em);
+  margin-left:0px;
+  padding-left: 0;
+}
+/*green checkmark after valid field onchange jquery*/
+.validate_symbol
+{
+  color:green;
+  font-size:1.5em;
+  margin-left:5%;
+}
+.password_toggle
+{
+  position:absolute;
+  font-size:1.5em;
+  margin-left: calc(95% - 1.5em);
+  padding-top:.25em;
+}
+
+#random_password
+{
+  position:absolute;
+  display:inline;
+  font-size:.7em;
+  border-radius:1em;
+  right: 5%;
+  bottom:2.75em;
+  cursor: pointer;
+  text-align: center;
+}
+#random_password:hover, #random_password:focus
+{
+  background-color:#e6e6e6;
+  
+}
+#random_password:active {
+  transform: translateY(.20em);
+}
+
+/*contains .password_toggle, position neccesary.*/
+.field_div
+{
+  display:flex;
+  position:relative;
+  width:100%;
+}
+.primary_form .field_invalid, 
+.primary_form .field_invalid:focus
+{
+  background-color: #ffcccc;
+  border: 2px solid #b30000;
+  border-radius: 5px 5px 0px 0px;
+  box-shadow: none;
+}
+.primary_form .field_valid:focus
+{
+  border-width:2px;
+  border-style:none none solid none;
+  border-color:#DDDDDD;
+  box-shadow: 0 0 0 2em white inset;
+  font-weight:normal;
+
+}
+.primary_form .link_flow
+{
+  font-size:small;
+
+}
+.primary_form summary::-webkit-details-marker {
+  color: black;
+  font-size:1em;
+  margin-left:-1em;
+}
+.primary_form summary 
+{
+  
+  text-align:center;
+  font-size:small;
+}
+.form_details
+{
+  font-size:.6em;
+  text-align:left;
+  overflow-wrap: break-word;
+}
+.form_details ul
+{
+  list-style-type: none;
+  padding-left:0%;
+}
+.form_details ol
+{
+
+  list-style-type: circle;
+}
+
+/*remove eye icon on MS*/
+.primary_form input[type=password]::-ms-reveal,
+.primary_form input[type=password]::-ms-clear
+{
+    display: none;
+}
+/*error messages below input*/
+.primary_form .error
+{
+  color:white;
+  background-color: #b30000;
+  padding:.25em .25em .25em 1em;
+  font-size:.9em;
+  border-radius: 0px 0px .5em .5em;
+}
+.password_toggle:hover
+{
+  cursor:pointer;
+  font-style: italic;
+}
 .form_legend
 {
   border-bottom: 1px solid gray;
-}
-#non_field_error .error
-{
-  font-size:15px;
-  border-radius:5px 5px 5px 5px;
-  padding:5px;
-  color:white;
-  background-color: #b30000;
   text-align:center;
-  width:350px;
 }
+.primary_form fieldset
+{
+  border-bottom: 1px solid gray;
+  margin-bottom:0;
+}
+
+
 #recaptcha_v2
 {
   padding-bottom: 5px;
+  
 }
+
 /*automatically select all code on click, then to normal*/
 code
 {
   background-color: #d4d3d1;
   border-color:#d4d3d1;
   color:black;
+  white-space: nowrap;
   -webkit-user-select: all; /* for Safari */
   user-select: all;
   -webkit-appearance: none;
@@ -40,26 +258,8 @@ code:focus
 }
 .help
 {
-    font-size: small;
+    font-size: 12px;
     color: gray;
-}
-/*buttons*/
-.btn-primary{
-  background-color: #1a75ff;
-}
-.btn-primary:disabled
-{
-    background-color: #5f788a;
-    border-color:#5f788a;
-    cursor: not-allowed;
-}
-.btn.btn-primary:enabled:hover{
-    background-color: white;
-    color:#1a75ff;
-    border-color:white;
-}
-input:disabled{
-  cursor: not-allowed;
 }
 input::placeholder {
   text-align: center; 
@@ -78,61 +278,217 @@ input:focus::placeholder
 {
   text-align:center;
 }
-#enable_javascript{
-  width: 600px;
-  margin-left:auto;
-  margin-right:auto;
-}
-body{
-  background-color: white;
-}
-.separate::after
+.fast_transition 
 {
-content:" | ";
-}
-
-.fast_transition {
   -webkit-transition: height 0.01s;
   -moz-transition: height 0.01s;
   -ms-transition: height 0.01s;
   -o-transition: height 0.01s;
   transition: height 0.01s;
 }
-/*font awesome*/
-.fa-asterisk
+.space a::before, .space a::after
 {
-  color:red;
+  content:"\00a0";
+}
+.separate::after
+{
+content:" | ";
 }
 
-.profile_icon
+
+@media only screen and (max-width:319.8px)
 {
-  width:25px;
-  height:25px;
-  border-radius: 50%;
+  #recaptcha_v2
+  {
+  transform:scale(0.8);
+  -webkit-transform:scale(0.8);
+  }
 }
 
-.btn-primary:enabled
+@media only screen and (min-width: 480px) {
+  .primary_form label, .form_details ul 
+  {
+    padding-left: 7.5%;
+  }
+  .primary_form input, .primary_form textarea, .primary_form .error
+  {
+    width:85%;
+  }
+  .primary_form .error
 {
-width:150px;
+  
+  font-size:1em;
+}
+  .primary_form .field_valid
+  {
+    width: calc(85% - 1.5em);
+  }
+  .validate_symbol
+  {
+    margin-left:7.5%;
+  }
+  .btn-primary:enabled
+  {
+    width:80%;
+  }
+  .btn-primary:disabled
+  {
+    width:75%;
+  }
+  .password_toggle
+  {
+    margin-left: calc(92.5% - 1.5em);
+  }
+  #random_password
+  {
+    right: 7.5%;
+  }
+}
+@media only screen and (min-width: 576px) 
+{
+  .primary_form label, .form_details ul 
+  {
+    padding-left: 10%;
+  }
+  .primary_form input, .primary_form textarea, .primary_form .error
+  {
+    width:80%;
+  }
+  .primary_form .field_valid
+  {
+    width: calc(80% - 1.5em);
+  }
+  .validate_symbol
+  {
+    margin-left:10%;
+  }
+  .btn-primary:enabled
+  {
+    width:75%;
+  }
+  .btn-primary:disabled
+  {
+    width:70%;
+  }
+  .password_toggle
+  {
+    margin-left: calc(90% - 1.5em); 
+  }
+  #random_password
+  {
+    right: 10%;
+  }
+}
+@media only screen and (min-width: 767.98px) 
+{
+  .primary_form label, .form_details ul 
+  {
+    padding-left: 20%;
+  }
+  .primary_form input, .primary_form textarea, .primary_form .error
+  {
+    width:60%;
+  }
+  .primary_form .field_valid
+  {
+    width: calc(60% - 1.5em);
+  }
+  .validate_symbol
+  {
+    margin-left:20%;
+  }
+  .btn-primary:enabled
+  {
+    width:55%;
+  }
+  .btn-primary:disabled
+  {
+    width:50%;
+  }
+  .password_toggle
+  {
+    margin-left: calc(80% - 1.5em);
+  }
+  #random_password
+  {
+    right: 20%;
+  }
+}
+@media only screen and (min-width: 991.98px) {
+  .primary_form label, .form_details ul 
+  {
+    padding-left: 25%;
+  }
+  .primary_form input, .primary_form textarea, .primary_form .error
+  {
+    width:50%;
+  }
+  .primary_form .field_valid
+  {
+    width: calc(50% - 1.5em);
+  }
+  .validate_symbol
+  {
+    margin-left:25%;
+  }
+  .btn-primary:enabled
+  {
+    width:45%;
+  }
+  .btn-primary:disabled
+  {
+    width:40%;
+  }
+  .password_toggle
+  {
+    margin-left: calc(75% - 1.5em);
+  }
+  #random_password
+  {
+    right: 25%;
+  }
+}
+@media only screen and (min-width: 1199.98px) {
+  .primary_form label, .form_details ul
+  {
+    padding-left: 30%;
+  }
+  .primary_form input, .primary_form textarea, .primary_form .error
+  {
+    width:40%;
+  }
+  .primary_form .field_valid
+  {
+    width: calc(40% - 1.5em);
+  }
+  .validate_symbol
+  {
+    margin-left:30%;
+  }
+  .btn-primary:enabled
+  {
+    width:35%;
+  }
+  .btn-primary:disabled
+  {
+    width:30%;
+  }
+  .password_toggle
+  {
+    margin-left: calc(70% - 1.5em);
+  }
+  #random_password
+  {
+    right: 30%;
+  }
+
+}
+.hide
+{
+ display: none;
+ line-height: .1em;
 }
 
-.primary_form
-{
-  background-color:white;
-  width:900px;
 
-}
 
-.primary_form input
-{
-  width:350px;
-  margin-top:10px;
-  border-radius: 5px 5px 5px 5px;
-}
 
-/*remove eye icon on MS*/
-.primary_form input[type=password]::-ms-reveal,
-.primary_form input[type=password]::-ms-clear
-{
-    display: none;
-}

@@ -18,7 +18,8 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.conf import settings
 from project.customized_classes import DivErrorList
 from . variables import (expires, check_profanity, check_password_alpha, 
-check_password_similarity, check_email, check_username, check_password_commonality)
+check_password_similarity, check_email, check_username, check_password_commonality,
+data_password, data_username, data_email)
 from django.views.decorators.cache import never_cache
 from django.contrib.auth.views import (LoginView, PasswordResetView, 
 	PasswordResetConfirmView,PasswordResetCompleteView)
@@ -28,6 +29,7 @@ from django.utils.crypto import get_random_string
 from django.contrib.auth import update_session_auth_hash
 import re
 UserModel = get_user_model()
+
 
 
 # all_success_messages = [msg.message for msg in list(messages.get_messages(request)) if msg.level_tag == 'success']
@@ -128,7 +130,6 @@ def email_confirmation(request, uidb64, token):
 	    	messages.warning(request, "Your activation link is invalid. Please \
 	    		change your password to activate your account.")
 	    	return redirect('password_reset')
-
     else:
     	if not request.user.is_authenticated:
     		messages.warning(request, f"Requested user '{uid}' does not exist.")
@@ -136,20 +137,6 @@ def email_confirmation(request, uidb64, token):
     	else:
     		messages.success(request, f"You are logged in as '{request.user.username}'")
     		return redirect ('/')
-
-
-
-
-    	# if 1 == 1:
-    	# 	pass
-    	# if not request.user.is_authenticated:
-	    # 	messages.warning(request, "Requested user does not exist.")
-	    # 	return redirect('register')
-	    # else:
-	    # 	messages.success(request, f"You are logged in as '{request.user.username}'")
-
-
-
 
 @login_required()
 def profile(request):
@@ -161,7 +148,7 @@ def profile(request):
 			user_form.save()
 			user_file_form.save()
 			messages.success(request, f'Update successful, thank you.')
-			return redirect('private-profile')
+			return redirect('private_profile')
 	else:
 		user_form = UserUpdateForm(instance =request.user)
 		user_file_form = UserFileForm(instance= request.user)
@@ -189,34 +176,12 @@ def validate_registration(request):
 	'email_null': len(email) == 0,
 	'password_null': len(password) == 0
 	}
-	if username != None and not data['username_null']:
-		if not data['username_length'] or not re.search('[A-Za-z]', username):
-			data['username_error'] = "At least 3 characters and 1 letter, please."
-		elif not data['username_valid']:
-			data['username_error'] = 'Only letters, digits, and underscores, please.'
-		elif data['username_taken']:
-			data['username_error'] = 'Username is taken.'
-		elif data['username_profane']:
-			data['username_error'] = "No profanity, please."
-		else:
-			data['username_pass'] = True
-	if email != None and not data['email_null']:
-		if not data['email_valid']:
-			data['email_error'] = "Enter a valid email, please."
-		else:
-			data['email_pass'] = True
-	if password != None and not data['password_null']:
-		if not data['password_length']:
-			data['password_error'] = "8 or more characters, please."
-		elif data['password_no_alpha']:
-			data['password_error'] = "Please don't use all digits."
-		elif data['password_too_similar']:
-			data['password_error'] = 'Password is too similar to personal info.'
-		elif data['password_too_common']:
-			data['password_error'] = 'Password is too common. Be strong, please.'
-		else: 
-			data['password_pass'] = True
+	
+	data_password(password, data)
+	data_username(username, data)
+	data_email(email, data)
 	return JsonResponse(data)
+
 
 
 
@@ -258,7 +223,19 @@ def validate_pw_change(request):
 			data['current_password_pass'] = True
 	return JsonResponse(data)
 
-
+def validate_login(request):
+	email = request.GET.get('email', None)
+	password = request.GET.get('password', None)
+	data = {
+	'email_valid': check_email(email),
+	'password_length': len(password) >=8,
+	'email_null': len(email) == 0,
+	'password_null': len(password) == 0
+	}
+	
+	data_password(password, data)
+	data_email(email, data)
+	return JsonResponse(data)
 
 
 
@@ -278,10 +255,7 @@ class EmailLoginView(LoginView):
 			messages.success(request, f"You are logged in as {request.user.username}.")
 			return redirect('/')
 		return super(EmailLoginView, self).get(request, *args, **kwargs)
-
-	
 	form_class = Email_Login
-
 
 class PasswordReset(PasswordResetView):
 	form_class = RequestPassReset
@@ -356,7 +330,7 @@ def password_change(request):
 			user = form.save()
 			update_session_auth_hash(request, user)
 			messages.success(request, 'Password successfully updated.')
-			return redirect('/')
+			return redirect('private_profile')
 		else:
 			messages.warning(request, "Unable to authenticate.")
 			return render(request,'users/password_change.html', {'form': form})

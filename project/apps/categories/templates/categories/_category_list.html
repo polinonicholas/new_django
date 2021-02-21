@@ -1,0 +1,21 @@
+{% load mptt_tags %}
+{% load blog %}
+
+<div class="all_categories card-columns">
+{% for node in all_categories %}
+{%if not node.is_child_node%}
+<div class="card category_group border-light">
+<h5 class="top_category card-header"><a href="{{node.get_absolute_url}}">{{node.name}}</a></h5>
+<ul class="sub_categories list-group list-group-flush">
+{% for sub_node, structure in node.get_descendants|tree_info:"ancestors"%}
+{% if sub_node.parent.rght == node.rght %}
+<li class="sub_category">{{ structure.ancestors|tree_path:" > "}}<a href="{{sub_node.get_absolute_url}}">{{sub_node.name}}</a></li>
+{% else %}
+<li class="sub_category">{{ structure.ancestors|tree_path:" > "}} > <a href="{{sub_node.get_absolute_url}}">{{sub_node.name}}</a></li>
+{% endif %}
+{%endfor%}
+</ul>
+</div>
+{% endif %}
+{% endfor %}
+</div>
