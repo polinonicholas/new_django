@@ -1,0 +1,17 @@
+{% load blog %}
+{% load bleach_tags %}
+
+<div class="container">
+{% for comment in comments %}
+  <div class="comment">
+  	<span class="comment_meta">From&nbsp;<a href="{% url 'public_profile' comment.author.username %}"><img class="nav_img rounded-circle"src="{{comment.author.image.url}}"> {{comment.author.username}}</a>&nbsp;on {{comment.posted|date:"d.n.y"}}:
+  	</span>
+    <div class="comment_content">{{comment.content|safe}}
+    </div>
+    <span class="comment_bio text-muted">"<i>{{comment.author.bio}}</i>"</span>
+  </div>
+
+
+{% endfor %}
+
+</div>

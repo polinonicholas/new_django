@@ -8,13 +8,16 @@ from mptt.models import TreeForeignKey
 from django.conf import settings
 from markdownx.models import MarkdownxField
 from markdownx.utils import markdownify
+from project.apps.categories.models import Category
 
 class Post(models.Model):
 	title = models.CharField(max_length = settings.MAX_TITLE_LENGTH)
 	content = MarkdownxField()
 	date_posted = models.DateTimeField(default = timezone.now)
-	author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete= models.CASCADE)
-	category = TreeForeignKey('categories.Category', on_delete=models.CASCADE)
+	author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete= models.CASCADE,
+		null=True, blank=True)
+	category = TreeForeignKey('categories.Category', on_delete=models.SET_DEFAULT,
+		default=Category.get_default_pk)
 	slug = models.SlugField(max_length=settings.MAX_TITLE_LENGTH, null=True, 
     blank=True,)
 
@@ -24,7 +27,6 @@ class Post(models.Model):
 	def get_absolute_url(self):
 		return reverse('post-detail', kwargs ={ 'pk':self.pk,
 			'slug': self.slug,})
-
 
 
 	def save(self, *args, **kwargs):

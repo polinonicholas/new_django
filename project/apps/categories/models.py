@@ -41,3 +41,8 @@ class Category(MPTTModel):
         child.save()
   def get_absolute_url(self):
     return reverse('category-detail', kwargs ={ 'url': self.url, })
+
+  @classmethod
+  def get_default_pk(cls):
+    category, created = cls.objects.get_or_create(name='Random')
+    return category.pk

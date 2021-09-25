@@ -1,4 +1,5 @@
 {% load blog %}
+{% load bleach_tags %}
 <h4 class="ml-1">Recents Posts</h4>
 <div class="posts row last_row">
 
@@ -6,8 +7,7 @@
   <div class="col-sm-6 col-md-4 col-xl-3 post">
   	<div class="inner_post">
 	  	<span><h5 class="post_title"> <a href="{%url 'post-detail' post.pk post.slug%}">{{ post.title }}</a></h5></span>
-	  	<div class="post_content">{{post.content|truncatechars:150|markdown|safe }}</div>
-	  	<br>
+	  	<div class="post_content">{{post.content|truncatechars:150|markdown|safe|bleach }}</div>
 	  	<br>
 	  	<div class="post_meta">
 	      <span>By: <a href="">{{ post.author.username }}</a></span>

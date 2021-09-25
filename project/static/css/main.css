@@ -234,15 +234,23 @@ button:focus, input:focus, summary:focus, textarea:focus
 }
 
 /*automatically select all code on click, then to normal*/
+pre code {
+  background-color: #eee;
+  border: 1px solid #999;
+  display: block;
+  padding: 20px;
+}
 code
 {
   background-color: #d4d3d1;
   border-color:#d4d3d1;
   color:black;
   white-space: nowrap;
-  -webkit-user-select: all; /* for Safari */
+  -webkit-user-select: all; 
   user-select: all;
   -webkit-appearance: none;
+  overflow:auto;
+  
 }
 code:focus
 {
@@ -497,6 +505,11 @@ content:" | ";
 .breadcrumb_nav ol
 {
   background-color: #f2f2f2;
+}
+
+.secondary_form
+{
+  
 }
 
 

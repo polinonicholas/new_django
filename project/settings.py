@@ -16,6 +16,7 @@ import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+print(BASE_DIR)
 
 
 # Quick-start development settings - unsuitable for production
@@ -34,11 +35,12 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     
     'project.apps.categories.apps.CategoriesConfig',
-    # 'project.apps.comments.apps.CommentsConfig',
+    'project.apps.comments.apps.CommentsConfig',
     'project.apps.users.apps.UsersConfig',
     'markdownx',
     'mptt',
     'mailer',
+    'django_bleach',
     'django.contrib.admin',
     'project.apps.blog.apps.BlogConfig',
     'django.contrib.auth',
@@ -206,3 +208,29 @@ AUTHENTICATION_BACKENDS = [
 # AWS_S3_FILE_OVERWRITE = False
 # AWS_DEFAULT_ACL = None
 # AWS_S3_REGION_NAME='us-east-2'
+
+
+
+BLEACH_ALLOWED_TAGS = [
+
+]
+
+# Which HTML attributes are allowed
+BLEACH_ALLOWED_ATTRIBUTES = []
+
+# Which CSS properties are allowed in 'style' attributes (assuming
+# style is an allowed attribute)
+BLEACH_ALLOWED_STYLES = []
+
+# Strip unknown tags if True, replace with HTML escaped characters if
+# False
+BLEACH_STRIP_TAGS = True
+
+# Strip comments, or leave them in.
+BLEACH_STRIP_COMMENTS = False
+
+
+BLEACH_DEFAULT_WIDGET = 'markdownx.widgets.MarkdownxWidget'
+
+
+NOFOLLOW_EXCEPTIONS = []

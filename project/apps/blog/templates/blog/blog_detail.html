@@ -3,11 +3,19 @@
 {% block head %}
 {{ block.super }}
 <link rel="stylesheet" type="text/css" href="{%static 'blog/css/main.css'%}">
+<link rel="stylesheet" type="text/css" href="{%static 'blog/css/comments.css'%}">
+
 {% endblock head %}
 <!-- Unique Content -->
 {% block content %}
 {{ block.super }}
 {% include 'blog/_post_detail.html' %}
+
+{% if user.is_authenticated %}
+{% include 'blog/_comment_form.html' %}
+{% endif %}
+{% include 'blog/_post_comments.html' %}
+
 {% endblock content %}
 <!-- Unique Scripts -->
 {% block scripts %}

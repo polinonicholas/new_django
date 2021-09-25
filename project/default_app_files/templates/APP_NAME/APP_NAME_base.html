@@ -1,14 +1,15 @@
-{% extends "templates/base.html" %}
-
+{% extends "base.html" %}
 <!-- Unique CSS -->
 {% block head %}
-{{ block.super %}}
+{{ block.super }}
 <link rel="stylesheet" type="text/css" href="{%static 'APP_NAME/css/main.css'%}">
-{% endblock head}
+{% endblock head %}
 
 <!-- Unique Content -->
 {% block content %}
-{% endblock content%}
+{{ block.super }}
+
+{% endblock content %}
 
 <!-- Unique Scripts -->
 {% block scripts %}
@@ -16,4 +17,4 @@
 <script src="{%static 'APP_NAME/js/main.js'%}"></script>
 {% endblock scripts %}
 
-
+{% block breadcrumbs %}{% endblock breadcrumbs %}

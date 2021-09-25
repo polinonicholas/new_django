@@ -28,6 +28,7 @@ from django.utils.translation import gettext_lazy as _
 from django.utils.crypto import get_random_string
 from django.contrib.auth import update_session_auth_hash
 import re
+from django.views.generic.base import TemplateView
 UserModel = get_user_model()
 
 
@@ -182,10 +183,6 @@ def validate_registration(request):
 	data_email(email, data)
 	return JsonResponse(data)
 
-
-
-
-
 def validate_pw_change(request):
 	password = request.GET.get('password', None)
 	current_password = request.GET.get('current_password', None)
@@ -337,18 +334,8 @@ def password_change(request):
 	else:
 		form = ChangePasswordForm(request.user, initial={'username': request.user.email})
 		return render(request, 'users/password_change.html', {'form': form})
-
-
-
-
-
-
-
-
-
-            
-         
-            
-            
-        
-   
+          
+class PublicProfile(TemplateView):
+	model = UserModel
+	template_name='users/public_profile.html'
+	

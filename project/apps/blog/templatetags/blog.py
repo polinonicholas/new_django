@@ -2,7 +2,6 @@ from django import template
 from django.template.defaultfilters import stringfilter
 from markdownx.utils import markdownify
 
-
 register = template.Library()
 
 @register.filter
@@ -15,7 +14,6 @@ upto.is_safe = True
 def markdown(value):
         return markdownify(value)
 markdown.is_safe = True
-
 @register.filter
 def sort_by(queryset, order):
     return queryset.order_by(order)

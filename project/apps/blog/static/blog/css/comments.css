@@ -1,0 +1,63 @@
+#comment_form
+{
+  width:100%;
+}
+
+#comment_form textarea
+{
+  border-radius:.25em .25em 0 0;
+}
+#comment_form button
+{
+  border-radius: 0 0 .25em .25em;
+  justify-content: center;
+}
+#comment_form label, #comment_form button,#comment_form textarea
+{
+  width:100%;
+  display:flex;
+  margin:0;
+}
+.comment
+{
+ 
+ background-color: #f2f2f2;
+}
+.comment_meta
+{
+  display:flex;
+  background-color:#ffff;
+  
+  font-weight:bold;
+  padding:.25em;
+}
+
+.comment_bio
+{
+  display:flex;
+  background-color:#f2f2f2;
+  
+  border:1px solid black;
+  border-width: 1px 0 0 0;
+}
+
+.comment_content
+{
+  word-wrap:anywhere;
+  background-color: white;
+  padding:.25em;
+}
+
+.comment_bio
+{
+  justify-content:center;
+}
+
+.comment_content p 
+{
+
+}
+.comment_content a
+{
+  display:inline;
+}

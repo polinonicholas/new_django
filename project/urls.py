@@ -4,8 +4,9 @@ from django.conf.urls.static import static
 from django.conf import settings
 from project.apps.users.views import (register, profile, email_confirmation, 
     validate_registration, EmailLoginView, PasswordReset, PasswordResetConfirm,
-    password_change, validate_pw_change, validate_login)
+    password_change, validate_pw_change, validate_login, PublicProfile)
 from django.contrib.auth.views import PasswordResetDoneView, LogoutView
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -16,6 +17,9 @@ urlpatterns = [
     
     path('register/', register, name ='register'),
     path('private-profile/', profile, name ='private_profile'),
+    path('profiles/<str:username>/', PublicProfile.as_view(), name ='public_profile'),
+    
+
     path('login/', EmailLoginView.as_view(template_name ='users/login.html'), name ='login'),
     path('email-sent/', PasswordResetDoneView.as_view(template_name ='users/email_sent.html'), name ='email-sent'),
     path('password-reset-confirm/<uidb64>/<token>/', PasswordResetConfirm.as_view(template_name ='users/password_reset_confirm.html'), name ='password_reset_confirm'),
